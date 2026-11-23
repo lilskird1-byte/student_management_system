@@ -34,7 +34,8 @@ while True:
     print("4.Edit Student")
     print("5.Delete Student")
     print("6.Total Students")
-    print("7.Exit")
+    print("7.GPA Records")
+    print("8.Exit")
 
     option=int(input("Select Option :"))
     print()
@@ -69,20 +70,45 @@ while True:
                 print("GPA:",students[student_id]["gpa"])
                 print()
     elif option==3:
-        print("====Search Student====")
-        search_id=input("Enter Student's ID :")
-        print()
-        if search_id in students:
-            print("===Search Results===")
-            print("Student ID:",search_id)
-            print("Name:",students[search_id]["name"])
-            print("Age:",students[search_id]["age"])
-            print("Program:",students[search_id]["program"])
-            print("GPA:",students[search_id]["gpa"])
+        while True:
+            print("====Search Student====")
+            print("1.By Student ID")
+            print("2.By Program")
+            print("3.Exit Search")
+            choice=int(input("Select your choice :"))
             print()
-        else:
-            print("No student found.")
-            print()
+            if choice==1:
+                search_id=input("Enter Student's ID :")
+                print()
+                if search_id in students:
+                    print("===Search Results===")
+                    print("Student ID:",search_id)
+                    print("Name:",students[search_id]["name"])
+                    print("Age:",students[search_id]["age"])
+                    print("Program:",students[search_id]["program"])
+                    print("GPA:",students[search_id]["gpa"])
+                    print()
+                else:
+                    print("ID not found!")
+            elif choice==2:
+                program=input("Enter Student Program :")
+                found= False
+
+                for student_id,details in students.items():
+                        if details["program"]==program:
+                            print(program)
+                            print(f"Name :{details["name"]}")
+                            print()
+
+                            found=True
+
+                if not found:
+                    print("Program not found!")
+                
+                    
+            elif choice==3:
+                print()
+                break
     elif option==4:
         print("====Edit Student====")
         while True:
@@ -141,6 +167,41 @@ while True:
     elif option==6:
         print(f"Total Students:{len(students)}")
     elif option==7:
+        print("====GPA Records====")
+        while True:
+            print("1.Students GPA")
+            print("2.Highest GPA")
+            print("3.Lowest GPA")
+            print("4.Leave Section")
+
+            option= int(input("Choose your option :"))
+            print()
+
+            if option==1:
+                print("====Students GPA====")
+                for student_id, details in sorted(students.items(), key= lambda x:x[1]["gpa"]):
+                    print("Student ID :",student_id)
+                    print("Name :",students[student_id]["name"])
+                    print("GPA :",students[student_id]["gpa"])
+                    print()
+            elif option==2:
+                print("====Highest GPA====")
+                highest_gpa=max(students.items(), key=lambda x:x[1]["gpa"])
+                student_id,details =highest_gpa
+                print(f"Name :{details["name"]}")
+                print(f"GPA :{details["gpa"]}")
+                print()
+            elif option==3:
+                print("====Lowest GPA====")
+                lowest_gpa=min(students.items(),key =lambda x:x[1]["gpa"])
+                student_id,details =lowest_gpa
+                print(f"Name :{details["name"]}")
+                print(f"GPA :{details["gpa"]}")
+                print()
+            elif option==4:
+                break
+
+    elif option==8:
         print("Updates Complted")
         break
     else:
